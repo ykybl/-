@@ -1,0 +1,22 @@
+[Plugin]
+# 菜鸟App广告屏蔽插件 - 2025.02.14
+# 功能：屏蔽首页商品推广、底部导航按钮、我的页面热门活动
+# 作者：根据用户需求定制[citation:2][citation:7]
+
+# 1. MITM配置（需解密HTTPS流量）
+[MITM]
+hostname = *.cainiao.com, *.cainiao-inc.com
+
+# 2. URL重写规则（拦截广告请求）
+[URL Rewrite]
+^https?:\/\/api\.cainiao\.com\/v\d\/home\/recommend reject-200  # 屏蔽首页商品推荐接口
+^https?:\/\/activity\.cainiao\.com\/promotion\/v\d\/list reject-200  # 屏蔽热门活动接口
+
+# 3. JavaScript脚本（动态移除页面元素）
+[Script]
+enable = true
+type = http-response
+pattern = ^https?:\/\/.*\.cainiao\.com\/v\d\/page\/home
+script-path = https://your-raw-url.com/cainiao-adblock.js  # 替换为实际脚本托管地址
+
+# 4. 元素选择器屏蔽（需结合JS脚本）
